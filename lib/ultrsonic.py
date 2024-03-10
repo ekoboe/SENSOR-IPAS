@@ -3,24 +3,24 @@
 from machine import Pin
 import utime
 
-trigger = Pin(3, Pin.OUT)
-echo = Pin(2, Pin.IN)
-class ULTRASONNIC:
+class ULTRASONNIC:    
     
-    @staticmethod
-    def ultrasonnic():
-        
+    def __init__(self, trg , ech):
+        self.trigger = Pin(trg, Pin.OUT)
+        self.echo = Pin(ech, Pin.IN)        
+    
+    def ultrasonnic(self):       
         tAwal = 0
-        trigger.low()
+        self.trigger.low()
         utime.sleep_us(2)
-        trigger.high()
+        self.trigger.high()
         utime.sleep_us(5)
-        trigger.low()
-        
-        while echo.value() == 0:
+        self.trigger.low()
+    
+        while self.echo.value() == 0:
             signalOff = utime.ticks_us()
         
-        while echo.value() == 1:
+        while self.echo.value() == 1:
             signalOn = utime.ticks_us()
         
         tAwal = signalOn - signalOff
@@ -28,3 +28,4 @@ class ULTRASONNIC:
         jarakCM = round(jarakCM,2)
         
         return jarakCM
+
